@@ -1,0 +1,32 @@
+■躓いたところ
+    pip install FlaskしたのにNo module named Flaskと言われる
+        https://qiita.com/ta_ta_ta_miya/items/e24394c6b0022405a126
+        eval "$(pyenv init -)"
+        を実行して解決
+    render_templateを読み込まなかった
+        from flask import Flask, render_template　記述の追加
+
+    内包表記について
+        https://qiita.com/y__sama/items/a2c458de97c4aa5a98e7
+        [counter for counter in iterator]
+        listの要素を一つずつ取り出して確認する
+        comprehension_1= [i for i in ['1','2','3','4','5'] if '3' not in i ]
+        print (comprehension_1)　>>['1', '2', '4', '5']
+        [method(i) for i in list] >> listの回数だけmethod(i)の結果を出して、配列に入れる
+
+    selfについて
+        https://qiita.com/mmshi/items/cbc7f1690f5f1f265af4
+        object.method2()
+        class Object
+            def method1(self):
+                Object.method2
+                method3(method2)
+            def method2()
+            def method3()
+        みたいなことをしたい時にselfを使う
+        class Object
+            def method1(self):
+                self.method2() // method1内でmethod2の状態をセーブ
+                method3(method2) //Objectに対してmethod2を実行した結果を使える
+            def method2()
+            def method3()
