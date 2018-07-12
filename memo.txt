@@ -34,3 +34,9 @@ dtenvで引数設定してとりあえずpushできることを確認する
                 method3(method2) //Objectに対してmethod2を実行した結果を使える
             def method2()
             def method3()
+
+
+    heroku上のpythonにパッケージを入れる時は設定ファイルとして
+    requirements.txtが使われる、がこれは勝手に書いてくれないので
+    毎回以下のコマンドを打って、pipの内容をrequirements.txtに書き出す。
+    pip freeze > requirements.txt
