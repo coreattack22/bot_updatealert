@@ -1,3 +1,7 @@
+dtenvで引数設定してとりあえずpushできることを確認する
+その後lineIDをパラメータで渡すことによって引数設定できるようにする
+
+
 ■躓いたところ
     pip install FlaskしたのにNo module named Flaskと言われる
         https://qiita.com/ta_ta_ta_miya/items/e24394c6b0022405a126

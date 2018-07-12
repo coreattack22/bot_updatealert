@@ -1,13 +1,13 @@
 # coding:utf-8
 from flask import Flask, request, abort, render_template
-import numpy as np
-import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import re
 import time
 from datetime import datetime, date, timedelta
-
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
 import scrape_ld_blog as scrape_ld_blog
 
 from linebot import (
@@ -20,20 +20,40 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('')
-handler = WebhookHandler('')
+line_bot_api = LineBotApi(os.environ.get("LINE_CHANNEL_ACCESS_TOKEN"))
+handler = WebhookHandler(os.environ.get("LINE_CHANNEL_SECRET"))
 
 @app.route('/')
 def hello():
     return render_template('hello.html')
 
-@app.route('/push_ss', methods=['GET'])
-def push_ss(): 
-    push_text =str(scrape_ld_blog.scrape().iloc[:,:])
-    to = ''
-    line_bot_api.push_message(to, TextSendMessage(text=push_text))
+@app.route('/check')
+def checkId():
+    #
+    return render_template('hello.html')
+
+
+@app.route('/push_ss/<url>', methods=['GET'])
+def push_ss(url):
+    url=str(url).replace('-','/')
+    to = os.environ.get("TEST_MESSAGE_ID") 
+    line_bot_api.push_message(to, TextSendMessage(text='---今日の更新---'))
+    all_list = scrape_ld_blog.scrape(url)
+    push_list = []    
+    for i, message_list in enumerate(all_list):
+        push_list.append(message_list)
+        if i==0:
+            continue
+        if i%4==0:
+            line_bot_api.push_message(to, TextSendMessage(text='\r\n'.join(push_list)))
+            push_list=[]
+    line_bot_api.push_message(to, TextSendMessage(text='\r\n'.join(push_list)))
+    line_bot_api.push_message(to, TextSendMessage(text='---ここまで---'))
     return 'OK'
 
 @app.route("/callback", methods=['POST'])
@@ -60,4 +80,3 @@ def handle_message(event):
 
 if __name__ == "__main__":
     app.run()
-
