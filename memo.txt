@@ -40,3 +40,17 @@ dtenvで引数設定してとりあえずpushできることを確認する
     requirements.txtが使われる、がこれは勝手に書いてくれないので
     毎回以下のコマンドを打って、pipの内容をrequirements.txtに書き出す。
     pip freeze > requirements.txt
+
+    http:--elephant.2chblog.jp-archives-cat_50054740.html
+
+    heroku config:set AWS_TOKEN=....
+    ※HEROKUにもgitを通してファイルをアップロードしてるので、当然githubに上がってない
+     .envが上がってるわけもなく、これは環境変数としてHEROKUに直に突っ込む
+
+     こーるばっくURL の設定
+     ローカルテストのngrokから戻してなかった。
+
+     Line roomIDの取得方法
+        
+
+     
