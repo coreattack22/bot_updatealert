@@ -75,7 +75,7 @@ def handle_message(event):
     print (event.source)
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text='このトークのIDは'+events.source+'です'))
+        TextSendMessage(text='このトークのIDは'+str(event.source)+'です'))
 
 
 if __name__ == "__main__":
