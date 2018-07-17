@@ -53,5 +53,5 @@ def create_data_list(url,pages):
 
 def scrape(url):
     blog = Blog(url)
-    push_list = create_data_list(url,5)
-    return push_list
+    return create_data_list(url,5)
+    

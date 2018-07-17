@@ -5,8 +5,6 @@ from bs4 import BeautifulSoup
 import re
 import time
 
-url = 'https://www.wantedly.com/projects?type=mixed&page=1&occupation_types%5B%5D=engineer&hiring_types%5B%5D=mid_career&locations%5B%5D=tokyo&keywords%5B%5D=python'
-
 class Wantedly:
     def __init__(self,url):
         self.url= url
@@ -49,9 +47,9 @@ def create_data_list(url,pages):
     dictionary = {'タイトル:':company_list, 'URL:':project_name_list, 'project_url':project_url_list}
     df = pd.DataFrame.from_dict(dictionary)
     time.sleep(3)
-    return df
+    return project_url_list
 
-wantedly = Wantedly(url)
-df = create_data_list(url,2)
-print (df)
-df.head()
+
+def scrape(url)
+    wantedly = Wantedly(url)
+    return create_data_list(url,2)

@@ -8,7 +8,8 @@ from datetime import datetime, date, timedelta
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
-import scrape_ld_blog as scrape_ld_blog
+import scrape_livedoorblog as scrape_livedoorblog
+import scrape_wantedly as scrape_wantedly
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -32,19 +33,24 @@ handler = WebhookHandler(os.environ.get("LINE_CHANNEL_SECRET"))
 def hello():
     return render_template('hello.html')
 
-@app.route('/check')
-def checkId():
-    #
-    return render_template('hello.html')
-
-
-@app.route('/push_ss/<url>/<id>', methods=['GET'])
-def push_ss(url,id):
+#対象サイトごとに処理
+@app.route('/push_livedoorblog/<url>/<id>', methods=['GET'])
+def push_livedoorblog(url,id):
     url=str(url).replace('-','/')
-    to = os.environ.get(str(id)) 
+    to = os.environ.get(str(id))
+    scrape_livedoorblog.scrape(url)
+    push_update(push_list,to)
+
+@app.route('/push_wantedly/<url>/<id>', methods=['GET'])
+def push_wantedly(url,id):
+    url=str(url).replace('-','/')
+    scrape_wantedly.scrape(url)
+    to = os.environ.get(str(id))
+    push_update(push_list,to)
+
+
+def push_update(push_list,to):
     line_bot_api.push_message(to, TextSendMessage(text='---今日の更新---'))
-    all_list = scrape_ld_blog.scrape(url)
-    push_list = []    
     for i, message_list in enumerate(all_list):
         push_list.append(message_list)
         if i==0:
@@ -58,12 +64,9 @@ def push_ss(url,id):
 
 @app.route("/callback", methods=['POST'])
 def callback():
-    # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
-    # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
-    # handle webhook body
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:

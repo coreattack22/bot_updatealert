@@ -4,26 +4,13 @@
 
 LINEBotで通知するサービスです。
 
+今のところlivedoorBlogとWantedlyに対応
+
+(参考にさせていただきました😍→　https://qiita.com/mtdkki/items/831a35666b35b8e11798)
+
 
 https://shareshortbot.herokuapp.com/ 
 
 
 ##使い方
-
-
-### 開発時のいろいろ
-
-最初はブログ名のタイトル/URLで取ってたけどいざラインに送ってみるとURLからページダイジェスト
-
-が表示されるので取得するのはURLだけでよかった。いちいちdataflameで出そうとしてたけど。。。
-
-
-#### 実装予定機能
-
-botに話しかけたらroomID/groupIDとかを返す
-
-GASからパラメータを渡してキックする(ブログURL,日付)
-
-
-
 
