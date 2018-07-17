@@ -12,7 +12,7 @@ LINEBotで通知するサービスです。
 https://shareshortbot.herokuapp.com/ 
 
 
-##使い方
+## 使い方
 
 このソースコードをherokuとかにデプロイする
 
@@ -22,6 +22,6 @@ GoogleAppsScriptにgas.jsのコードをそのまま貼り付けて、トリガ�
 
 ![Demo](https://user-images.githubusercontent.com/34805754/42837630-96ea96a8-8a39-11e8-93a9-d6a3088e503d.png)
 
-###その他
+### その他
 
 時間があればもっとちゃんとした体裁に書き直したい・・・
