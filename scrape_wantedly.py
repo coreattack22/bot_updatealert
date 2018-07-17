@@ -1,5 +1,3 @@
-import numpy as np
-import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -12,18 +10,6 @@ class Wantedly:
         self.html     = self.requests.text
         self.soup     = BeautifulSoup(self.html,'html.parser')
 
-    def get_companies(self):
-        list=[]
-        companies =  self.soup.find_all('a',{'class':'wt-company'})
-        for i in companies:
-            if str(i).find('img') == -1:
-                list.append(i.string)
-        return list
-
-    def get_project_names(self):
-        project_names =  self.soup.find_all('h1',{'class':'project-title'})
-        return [(i.text.replace('\\n','')) for i in project_names]
-
     def get_project_urls(self):
         project_urls =  self.soup.find_all('h1',{'class':'project-title'})
         return [('https://www.wantedly.com'+re.search('/projects[^?]*',str(i)).group(0)) for i in project_urls]
@@ -34,22 +20,21 @@ def apply_page_num(num,url):
 
 def create_data_list(url,pages):
     url_list = [apply_page_num(num, url) for num in range(0,pages)]
-    company_list      = []
-    project_name_list = []
     project_url_list  = []
 
     for url in url_list:
         instance = Wantedly(url)
-        company_list      = company_list      + instance.get_companies()
-        project_name_list = project_name_list + instance.get_project_names()
         project_url_list  = project_url_list  + instance.get_project_urls()
 
-    dictionary = {'タイトル:':company_list, 'URL:':project_name_list, 'project_url':project_url_list}
-    df = pd.DataFrame.from_dict(dictionary)
-    time.sleep(3)
     return project_url_list
 
 
 def scrape(url):
     wantedly = Wantedly(url)
-    return create_data_list(url,2)
+    print ("----")
+    print (url)
+    print("----")
+    return create_data_list(url,5)
+
+
+    

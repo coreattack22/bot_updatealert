@@ -20,7 +20,6 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
-
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
@@ -36,27 +35,29 @@ def hello():
 #対象サイトごとに処理
 @app.route('/push_livedoorblog/<url>/<id>', methods=['GET'])
 def push_livedoorblog(url,id):
-    url=str(url).replace('-','/')
+    #「?」「/」はエスケープする必要がある。
+    url=str(url).replace('-','/').replace('~','?')
     push_list = scrape_livedoorblog.scrape(url)
     push_update(push_list,id)
 
 @app.route('/push_wantedly/<url>/<id>', methods=['GET'])
 def push_wantedly(url,id):
-    url=str(url).replace('-','/')
+    url=str(url).replace('-','/').replace('~','?')
     push_list = scrape_wantedly.scrape(url)
     push_update(push_list,id)
 
 
 def push_update(push_list,to):
     line_bot_api.push_message(to, TextSendMessage(text='---今日の更新---'))
+    send_list=[]
     for i, message_list in enumerate(push_list):
-        push_list.append(message_list)
+        send_list.append(message_list)
         if i==0:
             continue
         if i%4==0:
-            line_bot_api.push_message(to, TextSendMessage(text='\r\n'.join(message_list)))
-            message_list=[]
-    line_bot_api.push_message(to, TextSendMessage(text='\r\n'.join(message_list)))
+            line_bot_api.push_message(to, TextSendMessage(text='\r\n'.join(send_list)))
+            send_list=[]
+    line_bot_api.push_message(to, TextSendMessage(text='\r\n'.join(send_list)))
     line_bot_api.push_message(to, TextSendMessage(text='---ここまで---'))
     return 'OK'
 
@@ -71,6 +72,8 @@ def callback():
         abort(400)
     return 'OK'
 
+
+#GASに記入するルームIDを調べる
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     line_bot_api.reply_message(
