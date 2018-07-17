@@ -50,6 +50,6 @@ def create_data_list(url,pages):
     return project_url_list
 
 
-def scrape(url)
+def scrape(url):
     wantedly = Wantedly(url)
     return create_data_list(url,2)
