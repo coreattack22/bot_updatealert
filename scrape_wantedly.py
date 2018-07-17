@@ -21,19 +21,14 @@ def apply_page_num(num,url):
 def create_data_list(url,pages):
     url_list = [apply_page_num(num, url) for num in range(0,pages)]
     project_url_list  = []
-
     for url in url_list:
         instance = Wantedly(url)
         project_url_list  = project_url_list  + instance.get_project_urls()
-
     return project_url_list
 
 
 def scrape(url):
     wantedly = Wantedly(url)
-    print ("----")
-    print (url)
-    print("----")
     return create_data_list(url,5)
 
 

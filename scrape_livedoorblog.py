@@ -40,12 +40,10 @@ def create_data_list(url,pages):
     url_list   = [apply_page_num(num, url) for num in range(1,pages+1)]
     link_list  = []
     date_list  = []
-
     for url in url_list:
         instance = Blog(url)
         link_list  = link_list  + instance.get_link()
         date_list  = date_list  + instance.get_date()
-
     #一番最初のレコードを保存する
     past_article_index= len(date_list)
     del link_list[int(past_article_index):]
