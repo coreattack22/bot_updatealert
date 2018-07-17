@@ -41,7 +41,7 @@ def checkId():
 @app.route('/push_ss/<url>/<id>', methods=['GET'])
 def push_ss(url,id):
     url=str(url).replace('-','/')
-    to = os.environ.get(id) 
+    to = os.environ.get(str(id)) 
     line_bot_api.push_message(to, TextSendMessage(text='---今日の更新---'))
     all_list = scrape_ld_blog.scrape(url)
     push_list = []    
@@ -72,10 +72,15 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    print (event.source)
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text='このトークのIDは'+str(event.source)+'です'))
+    if event.message.text=="あいうえお"
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='aiueo'))
+    else    
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='このトークのIDは'+str(event.source)+'です'))
+
 
 
 if __name__ == "__main__":
