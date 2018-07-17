@@ -39,13 +39,14 @@ def push_livedoorblog(url,id):
     url=str(url).replace('-','/').replace('~','?')
     push_list = scrape_livedoorblog.scrape(url)
     push_update(push_list,id)
+    return 'OK'
 
 @app.route('/push_wantedly/<url>/<id>', methods=['GET'])
 def push_wantedly(url,id):
     url=str(url).replace('-','/').replace('~','?')
     push_list = scrape_wantedly.scrape(url)
     push_update(push_list,id)
-
+    return 'OK'
 
 def push_update(push_list,to):
     line_bot_api.push_message(to, TextSendMessage(text='---今日の更新---'))
