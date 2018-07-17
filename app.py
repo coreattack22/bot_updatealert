@@ -72,14 +72,9 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if event.message.text=="あいうえお"
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text='aiueo'))
-    else    
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text='このトークのIDは'+str(event.source)+'です'))
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text='このトークのIDは'+str(event.source)+'です'))
 
 
 
