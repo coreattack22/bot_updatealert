@@ -38,15 +38,13 @@ def hello():
 def push_livedoorblog(url,id):
     url=str(url).replace('-','/')
     push_list = scrape_livedoorblog.scrape(url)
-    to = os.environ.get(str(id))
-    push_update(push_list,to)
+    push_update(push_list,id)
 
 @app.route('/push_wantedly/<url>/<id>', methods=['GET'])
 def push_wantedly(url,id):
     url=str(url).replace('-','/')
     push_list = scrape_wantedly.scrape(url)
-    to = os.environ.get(str(id))
-    push_update(push_list,to)
+    push_update(push_list,id)
 
 
 def push_update(push_list,to):
