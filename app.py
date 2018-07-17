@@ -49,7 +49,7 @@ def push_wantedly(url,id):
 
 def push_update(push_list,to):
     line_bot_api.push_message(to, TextSendMessage(text='---今日の更新---'))
-    for i, message_list in enumerate(all_list):
+    for i, message_list in enumerate(push_list):
         push_list.append(message_list)
         if i==0:
             continue
