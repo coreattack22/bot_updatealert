@@ -54,9 +54,9 @@ def push_update(push_list,to):
         if i==0:
             continue
         if i%4==0:
-            line_bot_api.push_message(to, TextSendMessage(text='\r\n'.join(push_list)))
-            push_list=[]
-    line_bot_api.push_message(to, TextSendMessage(text='\r\n'.join(push_list)))
+            line_bot_api.push_message(to, TextSendMessage(text='\r\n'.join(message_list)))
+            message_list=[]
+    line_bot_api.push_message(to, TextSendMessage(text='\r\n'.join(message_list)))
     line_bot_api.push_message(to, TextSendMessage(text='---ここまで---'))
     return 'OK'
 
